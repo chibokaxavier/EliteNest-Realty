@@ -22,7 +22,7 @@ const Header = () => {
           />
           <IoMdSearch className="text-lg absolute  top-3 right-3" />
         </form>
-        <ul className="flex ">
+        <ul className="flex font-bold ">
           <Link href={"/"}>
             <li className="hidden md:flex">Home</li>
           </Link>
