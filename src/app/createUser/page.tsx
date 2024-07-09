@@ -1,14 +1,24 @@
+"use client";
 import Image from "next/image";
-const page = () => {
+import { useState } from "react";
+import React from 'react'
+import { FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
+const CreateUserPage = () => {
+  const [hidePassword, setHidePassword] = useState(true);
+  const [password, setPassword] = useState("");
+  const togglePassword = () => {
+    setHidePassword(!hidePassword);
+  }
   return (
     <div>
       <div className="flex flex-row justify-center  items-center xl:mt-[40px] ">
         <div className="bg-white/60 h-[100vh] w-[100vw]  xl:w-[30vw] xl:h-[90vh] rounded-lg rounded-r-none  shadow-xl px-3">
           <div>
-            <p className="font-extrabold text-3xl text-center xl:text-4xl py-5">
+            <p className="font-extrabold text-3xl text-center xl:text-3xl py-5 xl:pt-3 xl:pb-3">
               Create your account
             </p>
-            <form action="" className="flex-col flex">
+            <form action="" className="flex-col flex relative">
               <label htmlFor="" className="label">
                 Username
               </label>
@@ -16,22 +26,50 @@ const page = () => {
                 type="text"
                 placeholder="Your Username"
                 className="input"
+                required
               />
               <label htmlFor="" className="label">
                 {" "}
                 Email
               </label>
-              <input type="email" placeholder="Your email" className="input" />
+              <input
+                type="email"
+                placeholder="Your email"
+                className="input"
+                required
+              />
               <label htmlFor="" className="label">
-                {" "}
                 Password
               </label>
-              <input type="password" placeholder="********" className="input" />
+              <input
+                type={hidePassword ? "password" : "text"}
+                placeholder="********"
+                className="input"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+
+               <div
+                className="absolute bottom-[268px] right-5"
+                onClick={togglePassword}
+              >
+                {hidePassword ? (
+                  <FaRegEyeSlash className="text-2xl" />
+                ) : (
+                  <FaRegEye className="text-2xl " />
+                )}
+              </div>
+
               <label htmlFor="" className="label">
-                {" "}
                 Confirm Password
               </label>
-              <input type="password" placeholder="********" className="input" />
+              <input
+                type="password"
+                placeholder="********"
+                className="input"
+                required
+              />
               <div className="mx-auto">
                 <button
                   type="submit"
@@ -66,4 +104,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CreateUserPage;

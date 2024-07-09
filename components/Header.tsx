@@ -29,7 +29,7 @@ const Header = () => {
           <Link href={"/About"}>
             <li className="hidden md:flex px-3">About</li>
           </Link>
-          <Link href={"/Signin"}>  
+          <Link href={"/Signin"}>
             <li>Sign in</li>
           </Link>
         </ul>
