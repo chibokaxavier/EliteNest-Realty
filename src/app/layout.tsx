@@ -7,8 +7,8 @@ import HeaderWrapper from "../../components/Headwrapper";
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
-  variable: "--font-jetbrainsMono",
+  weight: ["100", "200", "300", "500", "400", "700"],
+  variable: "--font-jetBrainsMono",
 });
 
 export const metadata: Metadata = {

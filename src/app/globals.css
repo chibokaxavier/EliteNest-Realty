@@ -8,7 +8,7 @@
   }
 
   .input {
-    @apply px-3 py-2 flex h-[50px]  w-full   rounded-md border border-none text-black  font-light bg-white/30  text-base  outline-none;
+    @apply px-3 py-2 flex h-[45px]  w-full   rounded-md border border-none text-black  font-light bg-transparent  text-base  outline-none;
   }
   .label {
     @apply text-xl font-bold pt-2 pb-1;
