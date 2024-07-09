@@ -6,4 +6,11 @@
   body {
     @apply bg-[#ddd0c8] text-[#010101] leading-loose;
   }
+
+  .input {
+    @apply px-3 py-2 flex h-[50px]  w-full   rounded-md border border-none text-black   font-light bg-white/30  text-base  outline-none;
+  }
+  .label {
+    @apply text-xl font-bold pt-3 pb-2;
+  }
 }
