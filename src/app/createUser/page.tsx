@@ -19,7 +19,7 @@ const CreateUserPage = () => {
   const toggleConfirmPassword = () => {
     setHideConfirmPassword(!hideConfirmPassword);
   };
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
@@ -30,12 +30,12 @@ const CreateUserPage = () => {
     }
   };
   return (
-    <div>
-      <div className="flex flex-row justify-center  items-center xl:mt-[40px] ">
-        <div className="bg-white/60 h-[100vh] w-[100vw]  xl:w-[30vw] xl:h-[90vh] rounded-lg rounded-r-none  shadow-xl px-3">
+    <div className="xl:bg-gradient-to-r from-slate-900 to-slate-700 h-[100vh] flex justify-center items-center ">
+      <div className="flex xl:flex-row flex-col  justify-center  items-center  ">
+        <div className=" h-[100vh] w-[100vw] order-2 xl:order-none xl:w-[30vw] xl:h-[90vh] rounded-lg rounded-r-none  bg-white px-10 pt-2">
           <div className="">
-            <p className="font-extrabold text-3xl text-center xl:text-3xl py-5 xl:pt-3 xl:pb-3">
-              Create your account
+            <p className="font-semibold text-2xl text-slate-800 text-center xl:text-3xl py-5 xl:pt-3 xl:pb-3">
+              Create Your Account
             </p>
             <form
               action=""
@@ -45,19 +45,22 @@ const CreateUserPage = () => {
               <label htmlFor="" className="label">
                 Username
               </label>
-              <input
-                type="text"
-                placeholder="Your Username"
-                className="input"
-                required
-                onChange={(e) => setUserName(e.target.value)}
-                value={userName}
-              />
+              <div className=" border rounded-md mb-2">
+                <input
+                  type="text"
+                  placeholder="Your Username"
+                  className="input"
+                  required
+                  onChange={(e) => setUserName(e.target.value)}
+                  value={userName}
+                />
+              </div>
+
               <label htmlFor="" className="label">
                 {" "}
                 Email
               </label>
-              <div>
+              <div className="border-2 rounded-md mb-2">
                 <input
                   type="email"
                   placeholder="Your email"
@@ -69,7 +72,7 @@ const CreateUserPage = () => {
               <label htmlFor="" className="label">
                 Password
               </label>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center border mb-2 rounded-md">
                 <input
                   type={hidePassword ? "password" : "text"}
                   placeholder="********"
@@ -91,7 +94,7 @@ const CreateUserPage = () => {
               <label htmlFor="" className="label">
                 Confirm Password
               </label>
-              <div className=" pb-0 flex items-center justify-center">
+              <div className=" border rounded-md flex items-center justify-center">
                 <input
                   type={hidePassword ? "password" : "text"}
                   placeholder="********"
@@ -101,7 +104,7 @@ const CreateUserPage = () => {
                   value={confirmPassword}
                 />
 
-                <div className=" mr-4" onClick={toggleConfirmPassword}>
+                <div className="pb-0 mr-4" onClick={toggleConfirmPassword}>
                   {hideConfirmPassword ? (
                     <FaRegEyeSlash className="text-xl" />
                   ) : (
@@ -109,17 +112,17 @@ const CreateUserPage = () => {
                   )}
                 </div>
               </div>
-              {error && <p className="text-red-500 mx-auto">{error}</p>}
-              <div className="mx-auto">
+              {error && <p className="pb-0 text-red-800 font-extrabold mx-auto">{error}</p>}
+              <div className="w-full">
                 <button
                   type="submit"
-                  className="xl:mt-5 mb-4 mt-10  flex items-center justify-center rounded-3xl bg-gray-600 text-white py-2 px-2 h-[35px] w-[90px]"
+                  className="xl:mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full "
                 >
                   Sign up
                 </button>
               </div>
             </form>
-            <button className="bg-blue-700 text-white py-2 rounded-lg px-4 font-bold flex gap-2 justify-center items-center mx-auto">
+            <button className="bg-transparent text-black  rounded-lg px-4 font-bold flex gap-2 justify-center items-center mx-auto">
               <FaGoogle className="text-2xl" />
               Sign Up with Google
             </button>
@@ -131,13 +134,13 @@ const CreateUserPage = () => {
             </p>
           </div>
         </div>
-        <div className="hidden xl:flex  items-center justify center h-[90vh] w-[35vw] rounded-lg rounded-l-none shadow-2xl">
+        <div className=" hidden xl:flex items-center justify center h-[20vh] w-[35vw] xl:h-[90vh] xl:w-[35vw] rounded-lg rounded-l-none bg-white ">
           <Image
-            src="/searching.png"
+            src="/login-img.png"
             alt="photo"
             priority
-            width={600}
-            height={550}
+            width={400}
+            height={400}
             className="object-contain"
             quality={100}
           />

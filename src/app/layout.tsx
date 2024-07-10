@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Forum } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import Header from "../../components/Header";
 import HeaderWrapper from "../../components/Headwrapper";
 
-const jetBrainsMono = JetBrains_Mono({
+const jetBrainsMono = Forum({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "500", "400", "700"],
-  variable: "--font-jetBrainsMono",
+  weight: [ "400"],
+  variable: "--font-Montserrat",
 });
 
 export const metadata: Metadata = {
