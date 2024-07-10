@@ -5,28 +5,51 @@ import React from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
+import { json } from "stream/consumers";
 
 const CreateUserPage = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [userName, setUserName] = useState("");
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const togglePassword = () => {
     setHidePassword(!hidePassword);
   };
   const toggleConfirmPassword = () => {
     setHideConfirmPassword(!hideConfirmPassword);
   };
-  const handleSubmit = (e: any) => {
+  const handleChange = (e: any) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  console.log(formData);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const { userName, email, password, confirmPassword } = formData;
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
     } else {
-      setError("");
-      // Handle form submission
-      console.log("Passwords match. Form submitted.");
+      try {
+        const res = await fetch("http://localhost:3001/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -39,7 +62,7 @@ const CreateUserPage = () => {
             </p>
             <form
               action=""
-              className="flex-col flex relative"
+              className="flex-col flex relative "
               onSubmit={handleSubmit}
             >
               <label htmlFor="" className="label">
@@ -51,8 +74,8 @@ const CreateUserPage = () => {
                   placeholder="Your Username"
                   className="input"
                   required
-                  onChange={(e) => setUserName(e.target.value)}
-                  value={userName}
+                  onChange={handleChange}
+                  id="userName"
                 />
               </div>
 
@@ -66,6 +89,8 @@ const CreateUserPage = () => {
                   placeholder="Your email"
                   className="input"
                   required
+                  id="email"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -78,8 +103,8 @@ const CreateUserPage = () => {
                   placeholder="********"
                   className="input "
                   required
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
+                  onChange={handleChange}
+                  id="password"
                 />
 
                 <div className="mr-4" onClick={togglePassword}>
@@ -100,8 +125,8 @@ const CreateUserPage = () => {
                   placeholder="********"
                   className="input"
                   required
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  value={confirmPassword}
+                  onChange={handleChange}
+                  id="confirmPassword"
                 />
 
                 <div className="pb-0 mr-4" onClick={toggleConfirmPassword}>
@@ -112,11 +137,15 @@ const CreateUserPage = () => {
                   )}
                 </div>
               </div>
-              {error && <p className="pb-0 text-red-800 font-extrabold mx-auto">{error}</p>}
+              {error && (
+                <p className="pb-0 text-red-800 font-extrabold mx-auto">
+                  {error}
+                </p>
+              )}
               <div className="w-full">
                 <button
                   type="submit"
-                  className="xl:mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full "
+                  className="mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full "
                 >
                   Sign up
                 </button>
