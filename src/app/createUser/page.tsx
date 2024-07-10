@@ -5,11 +5,14 @@ import React from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
-import { json } from "stream/consumers";
 
 const CreateUserPage = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     userName: "",
@@ -29,15 +32,15 @@ const CreateUserPage = () => {
       [e.target.id]: e.target.value,
     });
   };
-  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const { userName, email, password, confirmPassword } = formData;
+    const { password, confirmPassword } = formData;
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      setPasswordError("Passwords do not match!");
     } else {
       try {
+        setLoading(true);
         const res = await fetch("http://localhost:3001/api/auth/signup", {
           method: "POST",
           headers: {
@@ -47,7 +50,26 @@ const CreateUserPage = () => {
         });
         const data = await res.json();
         console.log(data);
+        if (data.message === "Username already exists") {
+          setEmailError("");
+          setLoading(false);
+          setUsernameError(data.message);
+          return;
+        }
+        if (data.message === "Email already exists") {
+          setUsernameError("");
+          setLoading(false);
+          setEmailError(data.message);
+          return;
+        }
+        if (data.success === false) {
+          setLoading(false);
+          setError(data.error);
+          return;
+        }
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -78,6 +100,10 @@ const CreateUserPage = () => {
                   id="userName"
                 />
               </div>
+              <p className="text-base text-red-600 font-semibold">
+                {" "}
+                {usernameError}
+              </p>
 
               <label htmlFor="" className="label">
                 {" "}
@@ -93,6 +119,10 @@ const CreateUserPage = () => {
                   onChange={handleChange}
                 />
               </div>
+              <p className="text-base text-red-600 font-semibold">
+                {" "}
+                {emailError}
+              </p>
 
               <label htmlFor="" className="label">
                 Password
@@ -137,15 +167,16 @@ const CreateUserPage = () => {
                   )}
                 </div>
               </div>
-              {error && (
+              {passwordError && (
                 <p className="pb-0 text-red-800 font-extrabold mx-auto">
-                  {error}
+                  {passwordError}
                 </p>
               )}
               <div className="w-full">
                 <button
                   type="submit"
-                  className="mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full "
+                  className="mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full  "
+                  disabled={loading}
                 >
                   Sign up
                 </button>
