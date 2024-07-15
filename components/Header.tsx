@@ -30,7 +30,11 @@ const Header = () => {
             <li className="hidden md:flex px-3">About</li>
           </Link>
           <Link href={"/Signin"}>
-            <li>Sign in</li>
+            <li>
+              <button className="bg-gray-600 px-3 py-2 rounded-xl text-white">
+                Sign in
+              </button>
+            </li>
           </Link>
         </ul>
       </div>

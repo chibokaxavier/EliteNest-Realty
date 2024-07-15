@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
@@ -201,9 +202,11 @@ const CreateUserPage = () => {
               </button>
               <p className="mx-auto pt-5 flex justify-center items-center gap-3">
                 Already have an account?{" "}
-                <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
-                  Sign In
-                </button>
+                <Link href={'/Signin'}>
+                  <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
+                    Sign In
+                  </button>
+                </Link>
               </p>
             </div>
           </div>

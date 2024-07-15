@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
@@ -12,22 +13,15 @@ import "react-toastify/dist/ReactToastify.css";
 const Signin = () => {
   const router = useRouter();
   const [hidePassword, setHidePassword] = useState(true);
-  const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
-  const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const togglePassword = () => {
     setHidePassword(!hidePassword);
-  };
-  const toggleConfirmPassword = () => {
-    setHideConfirmPassword(!hideConfirmPassword);
   };
   const createNotify = () => toast("Signed in successfully!");
   const handleChange = (e: any) => {
@@ -39,45 +33,41 @@ const Signin = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const { password, confirmPassword } = formData;
-    if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match!");
-    } else {
-      try {
-        setLoading(true);
-        const res = await fetch("http://localhost:3001/api/auth/signIn", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
-        console.log(data);
-        if (data.message === "Email already exists") {
-          setLoading(false);
-          setEmailError(data.message);
-          return;
-        }
-        if (data.success === false) {
-          setLoading(false);
-          setError(data.error);
-          return;
-        }
-        createNotify();
-        setEmailError("");
-        setError("");
-        setTimeout(() => {
-          setLoading(false);
-          router.push("/");
-        }, 1500);
-      } catch (error) {
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:3001/api/auth/signIn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.message === "Credentials are not valid") {
         setLoading(false);
-        console.log(error);
+        setEmailError(data.message);
+        return;
       }
+      if (data.success === false) {
+        setLoading(false);
+        setError(data.error);
+        return;
+      }
+      createNotify();
+      setEmailError("");
+      setError("");
+      setTimeout(() => {
+        setLoading(false);
+        router.push("/");
+      }, 1500);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
+
   return (
     <div>
       <div className="xl:bg-gradient-to-r from-slate-900 to-slate-700 h-[100vh] flex justify-center items-center ">
@@ -106,10 +96,6 @@ const Signin = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <p className="text-base text-red-600 font-semibold">
-                  {" "}
-                  {emailError}
-                </p>
 
                 <label htmlFor="" className="label">
                   Password
@@ -133,32 +119,10 @@ const Signin = () => {
                   </div>
                 </div>
 
-                <label htmlFor="" className="label">
-                  Confirm Password
-                </label>
-                <div className=" border rounded-md flex items-center justify-center">
-                  <input
-                    type={hidePassword ? "password" : "text"}
-                    placeholder="********"
-                    className="input"
-                    required
-                    onChange={handleChange}
-                    id="confirmPassword"
-                  />
-
-                  <div className="pb-0 mr-4" onClick={toggleConfirmPassword}>
-                    {hideConfirmPassword ? (
-                      <FaRegEyeSlash className="text-xl" />
-                    ) : (
-                      <FaRegEye className="text-xl " />
-                    )}
-                  </div>
-                </div>
-                {passwordError && (
-                  <p className="pb-0 text-red-800 font-extrabold mx-auto">
-                    {passwordError}
-                  </p>
-                )}
+                <p className="text-base text-red-600 font-semibold">
+                  {" "}
+                  {emailError}
+                </p>
                 <div className="w-full pt-10">
                   <button
                     type="submit"
@@ -173,6 +137,14 @@ const Signin = () => {
                 <FaGoogle className="text-2xl" />
                 Sign in with Google
               </button>
+              <p className="mx-auto pt-5 flex justify-center items-center gap-3">
+                Don't have an account?{" "}
+                <Link href={"/createUser"}>
+                  <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
+                    Sign up
+                  </button>
+                </Link>
+              </p>
             </div>
           </div>
           <div className=" hidden xl:flex items-center justify center h-[20vh] w-[35vw] xl:h-[90vh] xl:w-[35vw] rounded-lg rounded-l-none bg-white ">
