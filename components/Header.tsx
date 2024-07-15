@@ -22,7 +22,7 @@ const Header = () => {
           />
           <IoMdSearch className="text-lg absolute  top-3 right-3" />
         </form>
-        <ul className="flex font-bold ">
+        <ul className="flex font-bold  items-center justify-center">
           <Link href={"/"}>
             <li className="hidden md:flex">Home</li>
           </Link>
@@ -31,7 +31,7 @@ const Header = () => {
           </Link>
           <Link href={"/Signin"}>
             <li>
-              <button className="bg-gray-600 px-3 py-2 rounded-xl text-white">
+              <button className="bg-gray-600 px-3 xl:px-6 py-2 rounded-xl text-white">
                 Sign in
               </button>
             </li>
