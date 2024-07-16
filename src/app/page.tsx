@@ -1,25 +1,23 @@
-import Image from "next/image";
+"use client";
+import type { RootState } from "./store";
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "../feature/counter/counterSlice";
+import Head from "next/head";
 
 export default function Home() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
   return (
-    <main className="font-medium">
-      <div>Home apge</div>
-      <div className="text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque tempore
-        esse animi dolores sapiente ducimus et laudantium maxime eius, eveniet
-        adipisci perferendis odio temporibus quo recusandae, voluptatum nisi
-        doloribus debitis Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Repellendus iure quia illo, quisquam sint debitis minima? Tempore
-        voluptate ex fugit nisi, sequi, quisquam, distinctio at asperiores
-        voluptatibus facere dolor! Debitis! Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Optio, aliquam. Nihil suscipit quo a
-        itaque, corporis, earum quas nobis doloribus iste accusamus dolore
-        architecto, fuga eum consectetur molestiae voluptatem veritatis. Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Minima, placeat,
-        nesciunt eius, architecto facilis commodi consectetur cumque eligendi
-        cum ipsum ut optio aperiam non. Voluptatibus harum natus repudiandae
-        numquam iste.
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Dynamic Page Title</title>
+      </Head>
+      <main className="font-medium">
+        <div>Home apge</div>
+        <button onClick={() => dispatch(increment())}> add</button>
+        {count}
+        <div className="text-2xl">Lorem ipsum dolor sit amet co</div>
+      </main>
+    </>
   );
 }

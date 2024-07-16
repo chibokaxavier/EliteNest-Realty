@@ -1,19 +1,17 @@
-import type { Metadata } from "next";
+"use client";
 import { Forum } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
-import Header from "../../components/Header";
+import { store } from "./store";
+import { Provider } from "react-redux";
 import HeaderWrapper from "../../components/Headwrapper";
+import Head from "next/head";
 
 const jetBrainsMono = Forum({
   subsets: ["latin"],
-  weight: [ "400"],
+  weight: ["400"],
   variable: "--font-Montserrat",
 });
 
-export const metadata: Metadata = {
-  title: "EliteNest",
-};
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,9 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <title>EliteNest</title>{" "}
       <body className={jetBrainsMono.className}>
-        <HeaderWrapper />
-        {children}
+        <Provider store={store}>
+          <HeaderWrapper />
+          {children}
+        </Provider>
       </body>
     </html>
   );
