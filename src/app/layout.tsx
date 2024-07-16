@@ -1,10 +1,11 @@
 "use client";
 import { Forum } from "next/font/google";
 import "./globals.css";
-import { store } from "./store";
+import { persistor, store } from "./store";
 import { Provider } from "react-redux";
 import HeaderWrapper from "../../components/Headwrapper";
 import Head from "next/head";
+import { PersistGate } from "redux-persist/integration/react";
 
 const jetBrainsMono = Forum({
   subsets: ["latin"],
@@ -22,8 +23,10 @@ export default function RootLayout({
       <title>EliteNest</title>{" "}
       <body className={jetBrainsMono.className}>
         <Provider store={store}>
-          <HeaderWrapper />
-          {children}
+          <PersistGate loading={null} persistor={persistor}>
+            <HeaderWrapper />
+            {children}
+          </PersistGate>
         </Provider>
       </body>
     </html>

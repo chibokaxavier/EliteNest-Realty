@@ -8,14 +8,20 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
+import type { RootState } from "../store";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../../feature/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Signin = () => {
   const router = useRouter();
+  const { error, loading } = useSelector((state: RootState) => state.user);
   const [hidePassword, setHidePassword] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,7 +40,7 @@ const Signin = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("http://localhost:3001/api/auth/signIn", {
         method: "POST",
         headers: {
@@ -45,26 +51,21 @@ const Signin = () => {
       });
       const data = await res.json();
       console.log(data);
-      if (data.message === "Credentials are not valid") {
-        setLoading(false);
-        setEmailError(data.message);
-        return;
-      }
+
       if (data.success === false) {
-        setLoading(false);
-        setError(data.error);
+        dispatch(signInFailure(data.message));
+        console.log(error);
         return;
       }
       createNotify();
-      setEmailError("");
-      setError("");
       setTimeout(() => {
-        setLoading(false);
+        dispatch(signInSuccess(data));
         router.push("/");
       }, 1500);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+    } catch (error: any) {
+      dispatch(
+        signInFailure((error.message as string) || "An unknown error occurred")
+      );
     }
   };
 
@@ -96,7 +97,6 @@ const Signin = () => {
                     onChange={handleChange}
                   />
                 </div>
-
                 <label htmlFor="" className="label">
                   Password
                 </label>
@@ -109,7 +109,6 @@ const Signin = () => {
                     onChange={handleChange}
                     id="password"
                   />
-
                   <div className="mr-4" onClick={togglePassword}>
                     {hidePassword ? (
                       <FaRegEyeSlash className="text-xl" />
@@ -119,10 +118,7 @@ const Signin = () => {
                   </div>
                 </div>
 
-                <p className="text-base text-red-600 font-semibold">
-                  {" "}
-                  {emailError}
-                </p>
+                <p className="text-base text-red-600 font-semibold">{error}</p>
                 <div className="w-full pt-10">
                   <button
                     type="submit"
