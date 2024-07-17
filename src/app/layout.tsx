@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import HeaderWrapper from "../../components/Headwrapper";
 import Head from "next/head";
 import { PersistGate } from "redux-persist/integration/react";
+import { SessionProvider } from "@/components/SessionProvider";
 
 const jetBrainsMono = Forum({
   subsets: ["latin"],
@@ -22,12 +23,14 @@ export default function RootLayout({
     <html lang="en">
       <title>EliteNest</title>{" "}
       <body className={jetBrainsMono.className}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <HeaderWrapper />
-            {children}
-          </PersistGate>
-        </Provider>
+        <SessionProvider>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <HeaderWrapper />
+              {children}
+            </PersistGate>
+          </Provider>
+        </SessionProvider>
       </body>
     </html>
   );

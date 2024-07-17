@@ -10,6 +10,7 @@ import { FaRegEye } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signIn } from "next-auth/react";
 
 const CreateUserPage = () => {
   const router = useRouter();
