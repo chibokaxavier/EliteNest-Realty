@@ -1,4 +1,5 @@
 "use client";
+import OAuth from "@/components/OAuth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -196,10 +197,7 @@ const CreateUserPage = () => {
                   </button>
                 </div>
               </form>
-              <button className="bg-transparent text-black  rounded-lg px-4 font-bold flex gap-2 justify-center items-center mx-auto">
-                <FaGoogle className="text-2xl" />
-                Sign Up with Google
-              </button>
+             <OAuth/>
               <p className="mx-auto pt-5 flex justify-center items-center gap-3">
                 Already have an account?{" "}
                 <Link href={'/Signin'}>
