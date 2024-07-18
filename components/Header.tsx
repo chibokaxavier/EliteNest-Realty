@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import { IoMdSearch } from "react-icons/io";
@@ -22,6 +23,8 @@ const Header = () => {
           />
           <IoMdSearch className="text-lg absolute  top-3 right-3" />
         </form>
+
+        <button onClick={() => signOut()}>logout</button>
         <ul className="flex font-bold  items-center justify-center">
           <Link href={"/"}>
             <li className="hidden md:flex">Home</li>
