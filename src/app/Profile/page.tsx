@@ -1,9 +1,19 @@
-import React from 'react'
+"use client";
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
 
-export default page
+  if (!currentUser) {
+    router.push("/Signin");
+    return null;
+  }
+
+  return <div>profile</div>;
+};
+
+export default page;

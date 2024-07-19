@@ -11,6 +11,8 @@ import { FaGoogle } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { signIn } from "next-auth/react";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 const CreateUserPage = () => {
   const router = useRouter();
@@ -21,6 +23,12 @@ const CreateUserPage = () => {
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
+  if (currentUser) {
+    router.push("/");
+    return null;
+  }
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -198,10 +206,10 @@ const CreateUserPage = () => {
                   </button>
                 </div>
               </form>
-             <OAuth/>
+              <OAuth />
               <p className="mx-auto pt-5 flex justify-center items-center gap-3">
                 Already have an account?{" "}
-                <Link href={'/Signin'}>
+                <Link href={"/Signin"}>
                   <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
                     Sign In
                   </button>

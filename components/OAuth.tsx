@@ -8,19 +8,21 @@ import { useRouter } from "next/navigation";
 import Spinner from "./Spinner";
 
 const OAuth = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleGoogleAuth = async () => {
-   await signIn("google");
+    await signIn("google");
   };
 
   useEffect(() => {
     const google = async () => {
       if (session?.user) {
         setLoading(true);
+        console.log(session, "session");
+
         try {
           const res = await fetch("http://localhost:3001/api/auth/google", {
             method: "POST",
@@ -39,12 +41,15 @@ const OAuth = () => {
           router.push("/");
           setLoading(false);
         } catch (error) {
+          setLoading(false);
           console.log(error);
         }
       }
     };
-    google();
-  }, [session]);
+    if (status === "authenticated") {
+      google();
+    }
+  }, [session, status, dispatch, router]);
 
   if (loading) {
     return <Spinner />;

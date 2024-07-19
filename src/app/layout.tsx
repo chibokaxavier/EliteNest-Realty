@@ -1,17 +1,16 @@
 "use client";
-import { Forum } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { persistor, store } from "./store";
 import { Provider } from "react-redux";
 import HeaderWrapper from "../../components/Headwrapper";
-import Head from "next/head";
 import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "@/components/SessionProvider";
 
-const jetBrainsMono = Forum({
+const jetBrainsMono = Manrope({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-Montserrat",
+  weight: ["200", "300", "400", "500", "600", "700"],
+  variable: "--font-Manrope",
 });
 
 export default function RootLayout({

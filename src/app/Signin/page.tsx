@@ -23,6 +23,12 @@ const Signin = () => {
   const { error, loading } = useSelector((state: RootState) => state.user);
   const [hidePassword, setHidePassword] = useState(true);
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
+  if (currentUser) {
+    router.push("/");
+    return null;
+  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -70,7 +76,7 @@ const Signin = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="xl:bg-gradient-to-r from-slate-900 to-slate-700 h-[100vh] flex justify-center items-center ">
         <div className="flex xl:flex-row flex-col  justify-center  items-center  ">
           <div className=" h-[100vh] w-[100vw]  xl:w-[30vw] xl:h-[90vh] rounded-lg rounded-r-none  bg-white px-10 pt-2">
