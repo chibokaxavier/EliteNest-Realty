@@ -6,6 +6,9 @@
   body {
     @apply bg-[#ddd0c8] text-[#010101] leading-loose font-extrabold mx-5 xl:mx-20;
   }
+  .landing-hero {
+    @apply bg-[url('/housebg.avif')] bg-no-repeat bg-cover bg-center;
+  }
 
   .input {
     @apply px-3 py-2 flex h-[45px]  w-full   rounded-md border border-none text-black  font-light bg-transparent  text-base  outline-none;

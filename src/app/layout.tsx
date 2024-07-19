@@ -1,5 +1,5 @@
 "use client";
-import { Manrope } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { persistor, store } from "./store";
 import { Provider } from "react-redux";
@@ -7,7 +7,7 @@ import HeaderWrapper from "../../components/Headwrapper";
 import { PersistGate } from "redux-persist/integration/react";
 import { SessionProvider } from "@/components/SessionProvider";
 
-const jetBrainsMono = Manrope({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700"],
   variable: "--font-Manrope",

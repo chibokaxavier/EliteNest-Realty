@@ -21,7 +21,6 @@ const page = () => {
     if (currentUser) {
       setUsername(currentUser.userName);
       setEmail(currentUser.email);
-      // You might not want to prefill the password for security reasons
     } else {
       router.push("/Signin");
     }
