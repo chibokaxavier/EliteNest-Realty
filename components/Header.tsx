@@ -8,17 +8,17 @@ import type { RootState } from "../src/app/store";
 const Header = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   return (
-    <header className="py-6 xl:py-6 px-3 ">
+    <header className="py-6 xl:py-6 ">
       <div className="max-w-6xl flex justify-between mx-auto items-center">
         <Link href={"/"}>
-          <h1 className="font-bold flex xl:text-4xl md:text-3xl text-xl">
+          <h1 className="font-bold flex xl:text-4xl md:text-3xl text-2xl">
             <span>Elite</span>
             <span>Nest</span>
             <div className="xl:h-2 xl:w-2 md:h-[6px] md:w-[6px] rounded-full bg-black  h-1 w-1 mt-4 xl:mt-5 md:mt-6 xl:ml-2" />
           </h1>
         </Link>
 
-        <button onClick={() => signOut()}>logout</button>
+        {/* <button onClick={() => signOut()}>logout</button> */}
 
         <form action="" className="relative">
           <input
