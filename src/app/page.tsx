@@ -5,7 +5,7 @@ export default function Home() {
   // const dispatch = useDispatch();
   return (
     <>
-      <section className="  ">
+      <section className=" landing-hero h-[100vh] ">
         <div className="">
           <div>Home apge</div>
 
