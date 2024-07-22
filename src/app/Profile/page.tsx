@@ -10,6 +10,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import app from "../../../firebase";
+import { Span } from "next/dist/trace";
 
 const page = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -21,7 +22,9 @@ const page = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formdata, setFormdata] = useState({});
+  const [formdata, setFormdata] = useState({
+    avatar: "",
+  });
   console.log(formdata);
 
   if (!currentUser) {
@@ -85,10 +88,26 @@ const page = () => {
         />
         <img
           onClick={() => fileRef.current?.click()}
-          src={currentUser.avatar}
+          src={formdata.avatar || currentUser.avatar}
           alt=""
           className="cursor-pointer md:h-[350px] md:w-[350px] rounded-full sm:h-[250px] sm:w-[250px] h-[150px] w-[150px] md:rounded-md"
         />
+        <p className="text-sm self-center">
+          {fileUploadError ? (
+            <span className="text-red-700">
+              Error Image upload. (Try uploading an actual image with less that
+              2mb or check your internet connection)
+            </span>
+          ) : filePerc > 0 && filePerc < 100 ? (
+            <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
+          ) : filePerc === 100 ? (
+            <span className="text-green-700">
+              Image Successfully uploaded!!
+            </span>
+          ) : (
+            ""
+          )}
+        </p>
         <div>
           <div>
             <label htmlFor="" className="label">
