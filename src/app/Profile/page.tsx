@@ -15,6 +15,12 @@ import {
   updateUserSuccess,
   updateUserStart,
 } from "src/feature/user/userSlice";
+interface FormData {
+  avatar?: string; // Use optional property if it might not be present initially
+  userName?: string; // Use optional
+  email?: string;
+  password?: any;
+}
 
 const Page = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -26,7 +32,7 @@ const Page = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formdata, setFormdata] = useState({ avatar: "" });
+  const [formdata, setFormdata] = useState<FormData>({});
   const dispatch = useDispatch();
   console.log(formdata);
 
