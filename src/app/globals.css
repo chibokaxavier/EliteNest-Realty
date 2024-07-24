@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-[#ddd0c8] text-[#010101] leading-loose font-extrabold mx-5 xl:mx-20;
+    @apply bg-[#fff9ea] text-[#010101] leading-loose font-extrabold mx-5 xl:mx-20;
   }
   /* .landing-hero {
     @apply bg-[url('/bg-house.jpg')] bg-no-repeat bg-cover bg-center;
@@ -15,5 +15,8 @@
   }
   .label {
     @apply text-base font-semibold pt-3 pb-1;
+  }
+  .btn {
+    @apply py-[15px] bg-gray-600 px-[35px] rounded-[50px] text-white font-[600] mt-[30px];
   }
 }

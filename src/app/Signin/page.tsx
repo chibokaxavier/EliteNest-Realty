@@ -25,10 +25,10 @@ const Signin = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-  if (currentUser) {
-    router.push("/");
-    return null;
-  }
+  // if (currentUser) {
+  //   router.push("/");
+  //   return null;
+  // }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -132,6 +132,7 @@ const Signin = () => {
                     disabled={loading}
                   >
                     {loading ? "Loading" : "Sign in"}
+
                   </button>
                 </div>
               </form>
