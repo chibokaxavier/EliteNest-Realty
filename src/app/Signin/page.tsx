@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
@@ -25,10 +25,11 @@ const Signin = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-  // if (currentUser) {
-  //   router.push("/");
-  //   return null;
-  // }
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+    }
+  }, [currentUser, router]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -132,7 +133,6 @@ const Signin = () => {
                     disabled={loading}
                   >
                     {loading ? "Loading" : "Sign in"}
-
                   </button>
                 </div>
               </form>

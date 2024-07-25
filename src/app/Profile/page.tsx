@@ -10,11 +10,15 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import app from "../../../firebase";
+import "react-toastify/dist/ReactToastify.css";
 import {
   updateUserFailure,
   updateUserSuccess,
   updateUserStart,
 } from "src/feature/user/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import Spinner from "@/components/Spinner";
+
 interface FormData {
   avatar?: string; // Use optional property if it might not be present initially
   userName?: string; // Use optional
@@ -23,11 +27,10 @@ interface FormData {
 }
 
 const Page = () => {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentUser, loading } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [filePerc, setFilePerc] = useState(0);
@@ -36,11 +39,11 @@ const Page = () => {
   const dispatch = useDispatch();
   console.log(formdata);
 
-  // useEffect(() => {
-  //   if (!currentUser) {
-  //     router.push("/Signin");
-  //   }
-  // }, [currentUser, router]);
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/Signin");
+    }
+  }, [currentUser, router]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -86,6 +89,7 @@ const Page = () => {
     });
     console.log(formdata);
   };
+  const createNotify = () => toast("Profile updated successfully!");
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -107,8 +111,9 @@ const Page = () => {
         console.log(data.message);
       }
       dispatch(updateUserSuccess(data));
+      createNotify();
     } catch (error: any) {
-      console.log("fghjk");
+      console.log("");
 
       dispatch(
         updateUserFailure(
@@ -133,7 +138,7 @@ const Page = () => {
           />
           <img
             onClick={() => fileRef.current?.click()}
-            src={formdata.avatar || currentUser.avatar}
+            src={formdata.avatar || currentUser?.avatar}
             alt=""
             className="cursor-pointer md:h-[350px] md:w-[350px] rounded-full sm:h-[250px] sm:w-[250px] h-[150px] w-[150px] md:rounded-md"
           />
@@ -164,7 +169,7 @@ const Page = () => {
               type="text"
               onChange={handleChange}
               id="userName"
-              defaultValue={currentUser.userName}
+              defaultValue={currentUser?.userName}
               className=" flex py-1 px-3 bg-transparent border-black rounded-md md:w-[400px] w-[380px] mt-3 mb-6 outline-none  border-2"
             />
           </div>
@@ -174,7 +179,7 @@ const Page = () => {
             </label>
             <input
               type="email"
-              defaultValue={currentUser.email}
+              defaultValue={currentUser?.email}
               onChange={handleChange}
               id="email"
               className="flex py-1 px-3 bg-transparent border-black rounded-md md:w-[400px] w-[380px] mt-3 mb-6 outline-none  border-2"
@@ -191,11 +196,13 @@ const Page = () => {
               className="flex py-1 px-3 bg-transparent border-black rounded-md md:w-[400px] w-[380px] mt-3 mb-6 outline-none  border-2"
             />
           </div>
-          <button className="btn" type="submit">
-            UPDATE
+          <button disabled={loading} className="btn" type="submit">
+            {loading ? <Spinner /> : "UPDATE"}
           </button>
         </div>
       </form>
+      <ToastContainer />
+      {/* <p>{Error ? Error : ""}</p> */}
     </div>
   );
 };
