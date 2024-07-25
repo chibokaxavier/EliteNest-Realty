@@ -35,8 +35,19 @@ const Page = () => {
   const [file, setFile] = useState<File | null>(null);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formdata, setFormdata] = useState<FormData>({});
+  const [formdata, setFormdata] = useState<FormData>({
+    avatar: currentUser?.avatar,
+    userName: currentUser?.userName,
+    email: currentUser?.email,
+  });
+  const [initialData, setInitialData] = useState<FormData>({
+    avatar: currentUser?.avatar,
+    userName: currentUser?.userName,
+    email: currentUser?.email,
+  });
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
+
   console.log(formdata);
 
   useEffect(() => {
@@ -44,7 +55,13 @@ const Page = () => {
       router.push("/Signin");
     }
   }, [currentUser, router]);
-
+  useEffect(() => {
+    setInitialData({
+      avatar: currentUser?.avatar,
+      userName: currentUser?.userName,
+      email: currentUser?.email,
+    });
+  }, [currentUser]);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file: File = e.target.files[0];
@@ -92,6 +109,16 @@ const Page = () => {
   const createNotify = () => toast("Profile updated successfully!");
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setError("");
+    if (
+      formdata.userName === initialData.userName &&
+      formdata.email === initialData.email &&
+      formdata.avatar === initialData.avatar &&
+      !formdata.password
+    ) {
+      setError("No changes detected");
+      return;
+    }
     try {
       dispatch(updateUserStart());
       const res = await fetch(
@@ -107,19 +134,16 @@ const Page = () => {
       );
       const data = await res.json();
       if (data.success === false) {
+        setError(data.message);
         dispatch(updateUserFailure(data.message));
         console.log(data.message);
+        return;
       }
       dispatch(updateUserSuccess(data));
       createNotify();
     } catch (error: any) {
-      console.log("");
-
-      dispatch(
-        updateUserFailure(
-          (error.message as string) || "An unknown error occurred"
-        )
-      );
+      setError(error.message || "An unknown error occurred");
+      dispatch(updateUserFailure(error.message || "An unknown error occurred"));
     }
   };
   return (
@@ -199,10 +223,10 @@ const Page = () => {
           <button disabled={loading} className="btn" type="submit">
             {loading ? <Spinner /> : "UPDATE"}
           </button>
+          <p>{error ? error : ""}</p>
         </div>
       </form>
       <ToastContainer />
-      {/* <p>{Error ? Error : ""}</p> */}
     </div>
   );
 };
