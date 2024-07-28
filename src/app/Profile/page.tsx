@@ -15,9 +15,13 @@ import {
   updateUserFailure,
   updateUserSuccess,
   updateUserStart,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from "src/feature/user/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import Spinner from "@/components/Spinner";
+import { signOut } from "next-auth/react";
 
 interface FormData {
   avatar?: string; // Use optional property if it might not be present initially
@@ -146,6 +150,27 @@ const Page = () => {
       dispatch(updateUserFailure(error.message || "An unknown error occurred"));
     }
   };
+  const handleDeleteUser = async () => {
+    // await signOut();
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(
+        `http://localhost:3001/api/user/updateUser/${currentUser._id.toString()}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+      }
+      dispatch(deleteUserSuccess());
+      signOut();
+    } catch (error: any) {
+      dispatch(deleteUserFailure(error.message || "An unknown error occurred"));
+    }
+  };
   return (
     <div className="">
       <form
@@ -166,7 +191,13 @@ const Page = () => {
             alt=""
             className="cursor-pointer md:h-[350px] md:w-[350px] rounded-full sm:h-[250px] sm:w-[250px] h-[150px] w-[150px] md:rounded-md"
           />
-          <p className="text-sm self-center">
+          <div className="flex justify-between gap-20">
+            <p className="text-red-600" onClick={handleDeleteUser}>
+              Delete Account
+            </p>
+            <p className="text-red-600">Sign out</p>
+          </div>
+          <p className="text-sm self-center mt-10">
             {fileUploadError ? (
               <span className="text-red-700">
                 Error Image upload. (Try uploading an actual image with less
