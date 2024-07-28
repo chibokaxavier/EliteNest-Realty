@@ -44,7 +44,7 @@ const OAuth = () => {
           const data = await res.json();
           console.log(data.user, "user details");
           dispatch(signInSuccess(data));
-
+          await signOut();
           router.push("/");
 
           console.log("try worked");

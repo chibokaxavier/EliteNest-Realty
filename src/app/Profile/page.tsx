@@ -151,11 +151,10 @@ const Page = () => {
     }
   };
   const handleDeleteUser = async () => {
-    // await signOut();
     try {
       dispatch(deleteUserStart());
       const res = await fetch(
-        `http://localhost:3001/api/user/updateUser/${currentUser._id.toString()}`,
+        `http://localhost:3001/api/user/deleteUser/${currentUser._id.toString()}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -166,7 +165,6 @@ const Page = () => {
         dispatch(deleteUserFailure(data.message));
       }
       dispatch(deleteUserSuccess());
-      signOut();
     } catch (error: any) {
       dispatch(deleteUserFailure(error.message || "An unknown error occurred"));
     }

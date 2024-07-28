@@ -22,7 +22,7 @@ export const userSlice = createSlice({
       state.loading = true;
     },
     signInSuccess: (state, action: PayloadAction<any>) => {
-      state.currentUser = action.payload.user;
+      state.currentUser = action.payload.user || action.payload._doc;
       state.loading = false;
       state.error = null;
     },
