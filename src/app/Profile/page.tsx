@@ -18,6 +18,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutFailure,
+  signInStart,
+  signOutSuccess,
 } from "src/feature/user/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import Spinner from "@/components/Spinner";
@@ -163,10 +166,34 @@ const Page = () => {
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
+        return;
       }
       dispatch(deleteUserSuccess());
     } catch (error: any) {
       dispatch(deleteUserFailure(error.message || "An unknown error occurred"));
+    }
+  };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signInStart());
+      const res = await fetch(
+        `http://localhost:3001/api/auth/signOut/${currentUser._id.toString()}}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signOutFailure(data.message));
+        return;
+      }
+      dispatch(signOutSuccess());
+    } catch (error: any) {
+      dispatch(signOutFailure(error.message || "An unknown error occurred"));
     }
   };
   return (
@@ -193,7 +220,9 @@ const Page = () => {
             <p className="text-red-600" onClick={handleDeleteUser}>
               Delete Account
             </p>
-            <p className="text-red-600">Sign out</p>
+            <p className="text-red-600" onClick={handleSignOut}>
+              Sign out
+            </p>
           </div>
           <p className="text-sm self-center mt-10">
             {fileUploadError ? (

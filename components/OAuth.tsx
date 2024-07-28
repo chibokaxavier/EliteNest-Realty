@@ -44,9 +44,10 @@ const OAuth = () => {
           const data = await res.json();
           console.log(data.user, "user details");
           dispatch(signInSuccess(data));
-          await signOut();
           router.push("/");
-
+          setTimeout(() => {
+            signOut();
+          }, 500);
           console.log("try worked");
         } catch (error) {
           console.log(error);
