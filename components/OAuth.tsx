@@ -10,7 +10,6 @@ import { RootState } from "src/app/store";
 
 const OAuth = () => {
   const { data: session, status } = useSession();
-  // const [loading, setLoading] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
