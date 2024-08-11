@@ -3,9 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-[#fff9ea] text-[#010101] leading-loose font-extrabold mx-5 xl:mx-20;
+  /* body {
+    @apply bg-[#fff9ea] text-[#010101] leading-loose font-extrabold ;
+  } */
+
+  /* Remove scrollbar */
+  .remove-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
   }
+
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* background: #1e2238; */
+    background: transparent;
+  }
+
   /* .landing-hero {
     @apply bg-[url('/bg-house.jpg')] bg-no-repeat bg-cover bg-center;
   } */
@@ -18,5 +40,32 @@
   }
   .btn {
     @apply py-[15px] bg-gray-600 px-[35px] rounded-[50px] text-white font-[600] mt-[30px];
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply relative flex-1 overflow-y-auto px-[5%];
+  }
+
+  .sub-container {
+    @apply mx-auto flex flex-col size-full  py-10;
+  }
+
+  .side-img {
+    @apply hidden h-full object-cover md:block;
+  }
+
+  .copyright {
+    @apply text-14-regular justify-items-end text-center text-dark-600 xl:text-left;
+  }
+  .text-32-bold {
+    @apply text-[32px] leading-[36px] font-bold;
+  }
+  .header {
+    @apply text-[32px]  md:text-[36px] font-bold;
+  }
+  .shad-input {
+    @apply  placeholder:text-black border-black h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
   }
 }

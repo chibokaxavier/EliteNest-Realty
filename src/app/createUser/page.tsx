@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { signIn } from "next-auth/react";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
+import CreateUser from "@/components/CreateUser";
 
 const CreateUserPage = () => {
   const router = useRouter();
@@ -99,138 +100,34 @@ const CreateUserPage = () => {
     }
   };
   return (
-    <div>
-      <div className="xl:bg-gradient-to-r from-slate-900 to-slate-700 h-[100vh] flex justify-center items-center ">
-        <div className="flex xl:flex-row flex-col  justify-center  items-center  ">
-          <div className=" h-[100vh] w-[100vw]  xl:w-[30vw] xl:h-[90vh] rounded-lg rounded-r-none  bg-white px-10 pt-2">
-            <div className="">
-              <p className="font-semibold text-2xl text-slate-800 text-center xl:text-3xl py-5 xl:pt-3 xl:pb-3">
-                Create Your Account
-              </p>
-              <form
-                action=""
-                className="flex-col flex relative "
-                onSubmit={handleSubmit}
-              >
-                <label htmlFor="" className="label">
-                  Username
-                </label>
-                <div className=" border rounded-md mb-2">
-                  <input
-                    type="text"
-                    placeholder="Your Username"
-                    className="input"
-                    required
-                    onChange={handleChange}
-                    id="userName"
-                  />
-                </div>
-                <p className="text-base text-red-600 font-semibold">
-                  {" "}
-                  {usernameError}
-                </p>
-
-                <label htmlFor="" className="label">
-                  {" "}
-                  Email
-                </label>
-                <div className="border-2 rounded-md mb-2">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="input"
-                    required
-                    id="email"
-                    onChange={handleChange}
-                  />
-                </div>
-                <p className="text-base text-red-600 font-semibold">
-                  {" "}
-                  {emailError}
-                </p>
-
-                <label htmlFor="" className="label">
-                  Password
-                </label>
-                <div className="flex items-center justify-center border mb-2 rounded-md">
-                  <input
-                    type={hidePassword ? "password" : "text"}
-                    placeholder="********"
-                    className="input "
-                    required
-                    onChange={handleChange}
-                    id="password"
-                  />
-
-                  <div className="mr-4" onClick={togglePassword}>
-                    {hidePassword ? (
-                      <FaRegEyeSlash className="text-xl" />
-                    ) : (
-                      <FaRegEye className="text-xl " />
-                    )}
-                  </div>
-                </div>
-
-                <label htmlFor="" className="label">
-                  Confirm Password
-                </label>
-                <div className=" border rounded-md flex items-center justify-center">
-                  <input
-                    type={hidePassword ? "password" : "text"}
-                    placeholder="********"
-                    className="input"
-                    required
-                    onChange={handleChange}
-                    id="confirmPassword"
-                  />
-
-                  <div className="pb-0 mr-4" onClick={toggleConfirmPassword}>
-                    {hideConfirmPassword ? (
-                      <FaRegEyeSlash className="text-xl" />
-                    ) : (
-                      <FaRegEye className="text-xl " />
-                    )}
-                  </div>
-                </div>
-                {passwordError && (
-                  <p className="pb-0 text-red-800 font-extrabold mx-auto">
-                    {passwordError}
-                  </p>
-                )}
-                <div className="w-full">
-                  <button
-                    type="submit"
-                    className="mt-5 mb-4  flex items-center justify-center rounded-md bg-gray-600 text-white py-2 px-2 h-[35px] w-full  "
-                    disabled={loading}
-                  >
-                    {loading ? "Loading" : "Sign up"}
-                  </button>
-                </div>
-              </form>
-              <OAuth />
-              <p className="mx-auto pt-5 flex justify-center items-center gap-3">
-                Already have an account?{" "}
-                <Link href={"/Signin"}>
-                  <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
-                    Sign In
-                  </button>
-                </Link>
-              </p>
-            </div>
-          </div>
-          <div className=" hidden xl:flex items-center justify center h-[20vh] w-[35vw] xl:h-[90vh] xl:w-[35vw] rounded-lg rounded-l-none bg-white ">
-            <Image
-              src="/login-img.png"
-              alt="photo"
-              priority
-              width={400}
-              height={400}
-              className="object-contain"
-              quality={100}
-            />
-          </div>
+    <div className="flex h-screen max-h-screen ">
+      <section className="remove-scrollbar container ">
+        <div className="sub-container gap-2 max-w-[496px]">
+          <CreateUser
+            usernameError={usernameError}
+            emailError={emailError}
+            passwordError={passwordError}
+          />
+          <OAuth />
+          <p className="mx-auto pt-5 flex justify-center items-center gap-3">
+            Already have an account?
+            <Link href={"/Signin"}>
+              <button className=" h-[35px] w-[90px] flex items-center justify-center rounded-3xl bg-gray-600 text-white p-2">
+                Sign In
+              </button>
+            </Link>
+          </p>
         </div>
-      </div>
+      </section>
+
+      <Image
+        src="/login.jpg"
+        height={1000}
+        width={1000}
+        alt="patient"
+        className="side-img max-w-[50%]"
+      />
+
       <ToastContainer />
     </div>
   );
