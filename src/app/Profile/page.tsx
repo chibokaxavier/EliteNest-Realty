@@ -55,8 +55,6 @@ const Page = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
 
-  console.log(formdata);
-
   useEffect(() => {
     if (!currentUser) {
       router.push("/Signin");

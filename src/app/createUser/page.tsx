@@ -25,11 +25,11 @@ const CreateUserPage = () => {
   const [error, setError] = useState("");
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    if (currentUser) {
-      router.push("/");
-    }
-  }, [currentUser, router]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     router.push("/");
+  //   }
+  // }, [currentUser, router]);
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
